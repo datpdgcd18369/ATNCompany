@@ -1,58 +1,62 @@
-<?php
+<?php 
+	include 'inc/header.php';
+	include 'inc/slider.php';
+ ?>	
 
-/**
- * Laravel - A PHP Framework For Web Artisans
- *
- * @package  Laravel
- * @author   Taylor Otwell <taylorotwell@gmail.com>
- */
-
-/*
-|--------------------------------------------------------------------------
-| Register The Auto Loader
-|--------------------------------------------------------------------------
-|
-| Composer provides a convenient, automatically generated class loader for
-| our application. We just need to utilize it! We'll simply require it
-| into the script here so that we don't have to worry about manual
-| loading any of our classes later on. It feels nice to relax.
-|
-*/
-
-require __DIR__.'/bootstrap/autoload.php';
-
-/*
-|--------------------------------------------------------------------------
-| Turn On The Lights
-|--------------------------------------------------------------------------
-|
-| We need to illuminate PHP development, so let us turn on the lights.
-| This bootstraps the framework and gets it ready for use, then it
-| will load up this application so that we can run it and send
-| the responses back to the browser and delight our users.
-|
-*/
-
-$app = require_once __DIR__.'/bootstrap/app.php';
-
-/*
-|--------------------------------------------------------------------------
-| Run The Application
-|--------------------------------------------------------------------------
-|
-| Once we have the application, we can handle the incoming request
-| through the kernel, and send the associated response back to
-| the client's browser allowing them to enjoy the creative
-| and wonderful application we have prepared for them.
-|
-*/
-
-$kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
-
-$response = $kernel->handle(
-    $request = Illuminate\Http\Request::capture()
-);
-
-$response->send();
-
-$kernel->terminate($request, $response);
+ <div class="main">
+    <div class="content">
+    	<div class="content_top">
+    		<div class="heading">
+    		<h3>Sản phẩm nối bật</h3>
+    		</div>
+    		<div class="clear"></div>
+    	</div>
+	      <div class="section group">
+	      	<?php 
+	      	$product_featheread = $product->getproduct_featheread();
+	      	if($product_featheread){
+	      		while ($result = $product_featheread->fetch_assoc()) {
+	      			      	
+	      	 ?>
+				<div class="grid_1_of_4 images_1_of_4">
+					 <a href="details.php?proid=<?php echo $result['productId'] ?>"><img src="admin/uploads/<?php echo $result['image'] ?>" alt="" /></a>
+					 <h2><?php echo $result['productName'] ?></h2>
+					 <p><?php echo $fm->textShorten($result['product_desc'], 50) ?></p>
+					 <p><span class="price"><?php echo $fm->format_currency($result['price'])." "."VND" ?></span></p>
+				     <div class="button"><span><a href="details.php?proid=<?php echo $result['productId'] ?>" class="details">Chi tiết</a></span></div>
+				</div>
+				<?php 
+				}
+				}
+				 ?>
+			</div>
+			<div class="content_bottom">
+    		<div class="heading">
+    		<h3>Sản phẩm mới</h3>
+    		</div>
+    		<div class="clear"></div>
+    	</div>
+			<div class="section group">
+			<?php 
+	      	$product_new = $product->getproduct_new();
+	      	if($product_new){
+	      		while ($result_new = $product_new->fetch_assoc()) {
+	      			      	
+	      	 ?>
+				<div class="grid_1_of_4 images_1_of_4">
+					 <a href="details.php"><img src="admin/uploads/<?php echo $result_new['image'] ?>" alt="" /></a>
+					 <h2><?php echo $result_new['productName'] ?></h2>
+					 <p><?php echo $fm->textShorten($result_new['product_desc'], 50) ?></p>
+					 <p><span class="price"><?php echo $fm->format_currency($result_new['price'])." VND" ?></span></p>
+				     <div class="button"><span><a href="details.php?proid=<?php echo $result_new['productId'] ?>" class="details">Chi tiết</a></span></div>
+				</div>
+			<?php 
+				}
+				}
+			?>
+			</div>
+    </div>
+ </div>
+<?php 
+	include 'inc/footer.php';
+ ?>
